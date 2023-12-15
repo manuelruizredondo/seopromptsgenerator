@@ -16313,6 +16313,7 @@ a:hover {
   background-color: #F9F9F9;
   margin-bottom: 24px;
   border-width: 1px;
+  border-color: transparent;
   border-radius: 50px;
   color: var(--c-primary);
   max-width: 100%;

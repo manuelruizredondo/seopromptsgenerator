@@ -2,16 +2,14 @@
 layout: _index.njk
 permalink: /
 
-
-title: Prompt generator for seo 
-subtitle: Descubre cómo crear prompts efectivos, aprende técnicas avanzadas y mantente al día en el innovador mundo de los asistentes de IA, todo en español.
+title: Prompt Generator for SEO
+subtitle: Discover how to create effective prompts, learn advanced techniques, and stay up-to-date in the innovative world of AI assistants, all in Spanish.
 
 image: 7.jpgx
 
-
 eleventyComputed:
-  metaTitle: Generador de Prompts para ChatGPT en Español | Guía y Herramientas para Crear Prompts Efectivos
-  metaDescription: Aprende a crear prompts efectivos para ChatGPT, explora técnicas avanzadas y mantente actualizado en el desarrollo de asistentes de inteligencia artificial.
-  metaKeywords: generador de prompts, chatgpt, inteligencia artificial, herramientas de IA, desarrollo de prompts
+  metaTitle:  ChatGPT seo Prompt Generator | Guide and Tools for Creating Effective Prompts
+  metaDescription: Learn how to create effective prompts for ChatGPT, explore advanced techniques, and stay updated on the development of artificial intelligence assistants.
+  metaKeywords: prompt generator, chatgpt, artificial intelligence, AI tools, prompt development
   metaRobots: "index, follow"
 ---

@@ -13,52 +13,53 @@ layout: base.njk
         for seo markdown
       </h2>
       <form id="myForm">
+
         <div class="row">
           <div class="col-xs-6">
-            <div class="row text-12-r">
-              <div class="col-xs-12">
-                <input placeholder=" Página web" class="input" type="text" id="input8" name="input8"><br>
-                <input placeholder=" Experto en " class="input" type="text" id="input1" name="input1"><br>
-                <input placeholder=" De que va el post?" class="input" type="text" id="input2" name="input2"><br>
+              <div class="row text-12-r">
+                  <div class="col-xs-12">
+                      <input placeholder=" Website" class="input" type="text" id="input8" name="input8"><br>
+                      <input placeholder=" Expert in " class="input" type="text" id="input1" name="input1"><br>
+                      <input placeholder=" What is the post about?" class="input" type="text" id="input2" name="input2"><br>
+                  </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-6">
-                <input placeholder=" Keyword principal" class="input" type="text" id="input4" name="input4"><br>
+              <div class="row">
+                  <div class="col-xs-6">
+                      <input placeholder=" Main Keyword" class="input" type="text" id="input4" name="input4"><br>
+                  </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-4">
-                <input placeholder=" Keyword 1" class="input" type="text" id="input5" name="input5"><br>
+              <div class="row">
+                  <div class="col-xs-4">
+                      <input placeholder=" Keyword 1" class="input" type="text" id="input5" name="input5"><br>
+                  </div>
+                  <div class="col-xs-4">
+                      <input placeholder=" Keyword 2" class="input" type="text" id="input6" name="input6"><br>
+                  </div>
+                  <div class="col-xs-4">
+                      <input placeholder=" Keyword 3" class="input" class="btn mb-24" type="text" id="input7" name="input7"><br>
+                  </div>
               </div>
-              <div class="col-xs-4">
-                <input placeholder=" Keyword 2" class="input" type="text" id="input6" name="input6"><br>
+              <div class="row mb-24">
+                  <div class="col-xs-6">
+                      <input placeholder=" Post length" class="input" type="text" id="input3" name="input3"> <br>
+                  </div>
               </div>
-              <div class="col-xs-4">
-                <input placeholder=" Keyword 3" class="input" class="btn mb-24" type="text" id="input7"
-                  name="input7"><br>
+              <div class="row">
+                  <div class="col-xs-6">
+                      <button type="button" class="btn btn-primary btn--full" value="Generate text" onclick="generarTexto()">Generate text</button>
+                  </div>
               </div>
-            </div>
-            <div class="row mb-24">
-              <div class="col-xs-6">
-                <input placeholder=" Extension del post" class="input" type="text" id="input3" name="input3"> <br>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-6">
-                <button type="button" class="btn btn-primary btn--full" value="Generar texto"
-                  onclick="generarTexto()">Generar texto</button>
-              </div>
-            </div>
           </div>
           <div class="col-xs-6">
-            <div id="resultadowrap" class=" hidden">
-              <div id="resultado" class="text-12-r p-16 border-1 mb-64 "></div>
-            </div>
-            <button id="contarboton" class="btn btn-secondary hidden mb-24" onclick="copiarTexto()">Copiar texto</button>
-            <p id="contador"></p>
+              <div id="resultadowrap" class=" hidden">
+                  <div id="resultado" class="text-12-r p-16 border-1 mb-64 "></div>
+              </div>
+              <button id="contarboton" class="btn btn-secondary hidden mb-24" onclick="copiarTexto()">Copy text</button>
+              <p id="contador"></p>
           </div>
-        </div>
+      </div>
+
+
       </form>
     </div>
   </div>
@@ -97,39 +98,39 @@ layout: base.njk
     var palabra7 = document.getElementById("input7").value;
     var palabra8 = document.getElementById("input8").value;
     var resultado = `
-Escribe como un experto SEO y ${palabra1}  un artículo para el blog de mi web ${palabra8} . Sigue estas directrices:     
-1. Resuelve la intención de búsqueda de un usuario que quiere saber ${palabra2}.
-2. El post deberá tener una extensión de ${palabra3} palabras.
-3. La palabra clave principal para las optimizaciones SEO es ${palabra4}.
-4. Las palabras clave secundarias son ${palabra5}, ${palabra6} y ${palabra7}.
-5. Incluye un único H1 al inicio.
-6. Puedes usar tantos H2 y H3 como creas necesario para satisfacer la intención de búsqueda del artículo, no es necesario que los optimices todos para palabras clave.
-7. El artículo debe ser informacional, ya que los usuarios están en el primer nivel de consciencia del customer journey, alejados de la compra.
-8. Maximiza la retención del usuario, para que terminen de leer el artículo, usa un loop abierto al inicio para generar intriga.
-9. No añadas contenido que no aporte valor, no inventes datos, todo el artículo debe ser útil.
-10. Utiliza un lenguaje directo y sencillo, que entienda un niño de 10 años.
-La estructura a seguir es la siguiente, ya que es un documento markdown 
+Write like an SEO expert and ${palabra1} an article for my website's blog ${palabra8}. Follow these guidelines:
+1. Resolve the search intent of a user who wants to know ${palabra2}.
+2. The post should be ${palabra3} words long.
+3. The main keyword for SEO optimizations is ${palabra4}.
+4. The secondary keywords are ${palabra5}, ${palabra6}, and ${palabra7}.
+5. Include a single H1 at the beginning.
+6. You can use as many H2s and H3s as you think necessary to satisfy the search intent of the article, it's not necessary to optimize all of them for keywords.
+7. The article should be informational, as users are at the first level of awareness of the customer journey, far from making a purchase.
+8. Maximize user retention, so they finish reading the article, use an open loop at the beginning to generate intrigue.
+9. Do not add content that does not provide value, do not invent data, the entire article must be useful.
+10. Use direct and simple language, understandable by a 10-year-old child.
+The following structure should be followed, as it is a markdown document
       ---
-subtitle: subtitulo del blog
-title: titulo del blog
-date: fecha actual en formato 2023-06-19
-fecha: fecha actual en formato dia de mes de año
+subtitle: blog subtitle
+title: blog title
+date: current date in 2023-06-19 format
+date: current date in day of month of year format
 tags: ["tag1", "tag2"]
-image: /assets/static/images/nombredelaimagendel1 al 10.jpg
-imageAlt: texto alternativo para la imagen
+image: /assets/static/images/nameoftheimagefrom1to10.jpg
+imageAlt: alternative text for the image
 eleventyComputed:
-  metaTitle: Aqui va la meta title ocupa una sola línea y debe tener máximo 60 caracteres, El meta title ofrece a los usuarios una vista rápida sobre el contenido del contenido. Además de descriptivo tiene que ser atractivo y usaremos | como separador.
-  metaDescription: Esta meta descripción tiene que contener entre 140-160 caracteres. Debe estar escrita con la intención de obtener más clics. Deberíamos usar al menos un emoji. Escribe tu llamada a la acción (call to action) mejor en imperativo y al final del texto.
+  metaTitle: Here goes the meta title occupies a single line and should have a maximum of 60 characters, The meta title offers users a quick view of the content of the content. In addition to descriptive it has to be attractive and we will use | as a separator.
+  metaDescription: This meta description should contain between 140-160 characters. It should be written with the intention of getting more clicks. We should use at least one emoji. Write your call to action (CTA) better in imperative and at the end of the text.
   metaKeywords: "${palabra5},${palabra6},${palabra7}"
   metaRobots: "index, follow"
 ---
-Contenido del blog de unas ${palabra3} palabras  palabras Aqui meteremos el Contenido del blog generado por chat gpt con las directrices comentadas anterior mente  
+Content of the blog of about ${palabra3} words Here we will put the blog content generated by chat gpt with the previously mentioned guidelines  
 `;
 
 
 
     document.getElementById("resultado").textContent = resultado;
-    document.getElementById("contador").textContent = "Número de palabras: " + contarPalabras(resultado);
+    document.getElementById("contador").textContent = "Counter words " + contarPalabras(resultado);
   }
   function contarPalabras(texto) {
     var palabras = texto.split(" ");
@@ -152,6 +153,6 @@ Contenido del blog de unas ${palabra3} palabras  palabras Aqui meteremos el Cont
     tempInput.setSelectionRange(0, 99999); // Para dispositivos móviles
     document.execCommand("copy");
     document.body.removeChild(tempInput);
-    alert("Texto copiado: " + resultado);
+    alert("Copied!! " + resultado);
   }
 </script>
