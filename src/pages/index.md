@@ -3,14 +3,15 @@ layout: _index.njk
 permalink: /
 
 
-title:  Design systems
-subtitle:  Explora casos de estudio, aprende las mejores prácticas y mantente actualizado en este emocionante campo del diseño centrado en los design systems , todo ello en español.
+title: Prompt generator for seo 
+subtitle: Descubre cómo crear prompts efectivos, aprende técnicas avanzadas y mantente al día en el innovador mundo de los asistentes de IA, todo en español.
+
 image: 7.jpgx
 
 
 eleventyComputed:
-  metaTitle: Design Systems en español | Una recopilación de material para aprender Design systems
-  metaDescription: Explora casos de estudio, aprende las mejores prácticas y mantente actualizado en este emocionante campo del diseño centrado en los design systems.
-  metaKeywords: design systems.es
+  metaTitle: Generador de Prompts para ChatGPT en Español | Guía y Herramientas para Crear Prompts Efectivos
+  metaDescription: Aprende a crear prompts efectivos para ChatGPT, explora técnicas avanzadas y mantente actualizado en el desarrollo de asistentes de inteligencia artificial.
+  metaKeywords: generador de prompts, chatgpt, inteligencia artificial, herramientas de IA, desarrollo de prompts
   metaRobots: "index, follow"
 ---
