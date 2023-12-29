@@ -16203,6 +16203,30 @@ header.interior svg path {
   animation-delay: 70000ms;
 }
 
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.rotating {
+  -webkit-animation: rotating 10s linear infinite;
+  -moz-animation: rotating 10s linear infinite;
+  -ms-animation: rotating 10s linear infinite;
+  -o-animation: rotating 10s linear infinite;
+  animation: rotating 10s linear infinite;
+}
+
 .c-secondary {
   color: var(--c-secondary);
 }
@@ -16223,7 +16247,7 @@ html {
 body {
   overflow-x: hidden;
   color: var(--c-primary);
-  background-color: #fff;
+  background-color: #F7F7F9;
   scroll-behavior: smooth;
 }
 
@@ -16962,4 +16986,45 @@ a:hover {
 
 .btn:hover {
   cursor: pointer;
+}
+
+.box1 {
+  position: relative;
+  border-radius: 50px;
+  padding: 24px;
+  background-color: #ffffff;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: 0.3s ease all;
+}
+.box1 .box1-arrow {
+  transition: 0.3s ease all;
+  position: absolute;
+  right: 30px;
+  opacity: 0;
+}
+.box1:hover {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.box1:hover .box1-arrow {
+  opacity: 1;
+}
+.box1 .badge {
+  background-color: #2E2F33;
+  min-width: 50px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  color: white;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}
+.box1 .box1-footer {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
 }
