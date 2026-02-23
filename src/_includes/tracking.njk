@@ -1,0 +1,450 @@
+---
+layout: base.njk
+---
+
+<div class="section ptr-200">
+  <div class="container-global mx-auto">
+    <div class="fluid-5-r mb-8">Tracking</div>
+    <div class="text-16-r mb-24">Bitcoin, oro y plata — RSI en vista semanal</div>
+  </div>
+
+  <div class="container-global mx-auto">
+    <div class="row">
+      <div class="col-xs-12">
+        <h1>Tracking — RSI semanal</h1>
+        <p class="tracking-intro">Precio actual y RSI(14) semanal. En <span class="rsi-extreme">rojo</span> cuando está sobrecomprado (RSI ≥ 70) o sobrevendido (RSI ≤ 30).</p>
+
+        <div class="tracking-grid" id="tracking-grid">
+          <div class="tracking-card" id="card-btc">
+            <div class="tracking-card-header">
+              <span class="tracking-asset-name">Bitcoin</span>
+              <span class="tracking-symbol">BTC/USDT</span>
+            </div>
+            <div class="tracking-price" id="price-btc">—</div>
+            <div class="tracking-rsi-wrap">
+              <span class="tracking-label">RSI semanal (14):</span>
+              <span class="tracking-rsi" id="rsi-btc" data-rsi="">—</span>
+            </div>
+            <div class="tracking-status" id="status-btc"></div>
+          </div>
+
+          <div class="tracking-card" id="card-gold">
+            <div class="tracking-card-header">
+              <span class="tracking-asset-name">Oro</span>
+              <span class="tracking-symbol">PAXG/USDT</span>
+            </div>
+            <div class="tracking-price" id="price-gold">—</div>
+            <div class="tracking-rsi-wrap">
+              <span class="tracking-label">RSI semanal (14):</span>
+              <span class="tracking-rsi" id="rsi-gold" data-rsi="">—</span>
+            </div>
+            <div class="tracking-status" id="status-gold"></div>
+          </div>
+
+          <div class="tracking-card" id="card-silver">
+            <div class="tracking-card-header">
+              <span class="tracking-asset-name">Plata</span>
+              <span class="tracking-symbol">XAG/USD</span>
+            </div>
+            <div class="tracking-price" id="price-silver">—</div>
+            <div class="tracking-rsi-wrap">
+              <span class="tracking-label">RSI semanal (14):</span>
+              <span class="tracking-rsi" id="rsi-silver" data-rsi="">—</span>
+            </div>
+            <div class="tracking-status" id="status-silver"></div>
+          </div>
+        </div>
+
+        <h2 class="tracking-section-title">Acciones</h2>
+        <p class="tracking-intro">Precio en tiempo real, cambio diario y RSI(14) semanal. Actualización automática cada 30 s.</p>
+        <div class="tracking-grid tracking-grid-stocks" id="tracking-stocks">
+          <div class="tracking-card tracking-card-stock" data-symbol="LAC">
+            <div class="tracking-card-header">
+              <span class="tracking-asset-name">LAC</span>
+              <span class="tracking-symbol">Lithium Americas</span>
+            </div>
+            <div class="tracking-price" id="price-LAC">—</div>
+            <div class="tracking-change-wrap" id="change-LAC">—</div>
+            <div class="tracking-rsi-wrap">
+              <span class="tracking-label">RSI semanal:</span>
+              <span class="tracking-rsi" id="rsi-LAC">—</span>
+            </div>
+            <div class="tracking-status" id="status-LAC"></div>
+          </div>
+          <div class="tracking-card tracking-card-stock" data-symbol="PYPL">
+            <div class="tracking-card-header">
+              <span class="tracking-asset-name">PYPL</span>
+              <span class="tracking-symbol">PayPal</span>
+            </div>
+            <div class="tracking-price" id="price-PYPL">—</div>
+            <div class="tracking-change-wrap" id="change-PYPL">—</div>
+            <div class="tracking-rsi-wrap">
+              <span class="tracking-label">RSI semanal:</span>
+              <span class="tracking-rsi" id="rsi-PYPL">—</span>
+            </div>
+            <div class="tracking-status" id="status-PYPL"></div>
+          </div>
+          <div class="tracking-card tracking-card-stock" data-symbol="URA">
+            <div class="tracking-card-header">
+              <span class="tracking-asset-name">URA</span>
+              <span class="tracking-symbol">Global X Uranium</span>
+            </div>
+            <div class="tracking-price" id="price-URA">—</div>
+            <div class="tracking-change-wrap" id="change-URA">—</div>
+            <div class="tracking-rsi-wrap">
+              <span class="tracking-label">RSI semanal:</span>
+              <span class="tracking-rsi" id="rsi-URA">—</span>
+            </div>
+            <div class="tracking-status" id="status-URA"></div>
+          </div>
+          <div class="tracking-card tracking-card-stock" data-symbol="META">
+            <div class="tracking-card-header">
+              <span class="tracking-asset-name">META</span>
+              <span class="tracking-symbol">Meta Platforms</span>
+            </div>
+            <div class="tracking-price" id="price-META">—</div>
+            <div class="tracking-change-wrap" id="change-META">—</div>
+            <div class="tracking-rsi-wrap">
+              <span class="tracking-label">RSI semanal:</span>
+              <span class="tracking-rsi" id="rsi-META">—</span>
+            </div>
+            <div class="tracking-status" id="status-META"></div>
+          </div>
+          <div class="tracking-card tracking-card-stock" data-symbol="MSTR">
+            <div class="tracking-card-header">
+              <span class="tracking-asset-name">MSTR</span>
+              <span class="tracking-symbol">MicroStrategy</span>
+            </div>
+            <div class="tracking-price" id="price-MSTR">—</div>
+            <div class="tracking-change-wrap" id="change-MSTR">—</div>
+            <div class="tracking-rsi-wrap">
+              <span class="tracking-label">RSI semanal:</span>
+              <span class="tracking-rsi" id="rsi-MSTR">—</span>
+            </div>
+            <div class="tracking-status" id="status-MSTR"></div>
+          </div>
+          <div class="tracking-card tracking-card-stock" data-symbol="STRC">
+            <div class="tracking-card-header">
+              <span class="tracking-asset-name">STRC</span>
+              <span class="tracking-symbol">Sarcos</span>
+            </div>
+            <div class="tracking-price" id="price-STRC">—</div>
+            <div class="tracking-change-wrap" id="change-STRC">—</div>
+            <div class="tracking-rsi-wrap">
+              <span class="tracking-label">RSI semanal:</span>
+              <span class="tracking-rsi" id="rsi-STRC">—</span>
+            </div>
+            <div class="tracking-status" id="status-STRC"></div>
+          </div>
+          <div class="tracking-card tracking-card-stock" data-symbol="ORCL">
+            <div class="tracking-card-header">
+              <span class="tracking-asset-name">ORCL</span>
+              <span class="tracking-symbol">Oracle</span>
+            </div>
+            <div class="tracking-price" id="price-ORCL">—</div>
+            <div class="tracking-change-wrap" id="change-ORCL">—</div>
+            <div class="tracking-rsi-wrap">
+              <span class="tracking-label">RSI semanal:</span>
+              <span class="tracking-rsi" id="rsi-ORCL">—</span>
+            </div>
+            <div class="tracking-status" id="status-ORCL"></div>
+          </div>
+          <div class="tracking-card tracking-card-stock" data-symbol="UNH">
+            <div class="tracking-card-header">
+              <span class="tracking-asset-name">UNH</span>
+              <span class="tracking-symbol">UnitedHealth</span>
+            </div>
+            <div class="tracking-price" id="price-UNH">—</div>
+            <div class="tracking-change-wrap" id="change-UNH">—</div>
+            <div class="tracking-rsi-wrap">
+              <span class="tracking-label">RSI semanal:</span>
+              <span class="tracking-rsi" id="rsi-UNH">—</span>
+            </div>
+            <div class="tracking-status" id="status-UNH"></div>
+          </div>
+          <div class="tracking-card tracking-card-stock" data-symbol="ABB">
+            <div class="tracking-card-header">
+              <span class="tracking-asset-name">ABB</span>
+              <span class="tracking-symbol">ABB Ltd</span>
+            </div>
+            <div class="tracking-price" id="price-ABB">—</div>
+            <div class="tracking-change-wrap" id="change-ABB">—</div>
+            <div class="tracking-rsi-wrap">
+              <span class="tracking-label">RSI semanal:</span>
+              <span class="tracking-rsi" id="rsi-ABB">—</span>
+            </div>
+            <div class="tracking-status" id="status-ABB"></div>
+          </div>
+        </div>
+
+        <p class="tracking-footer">Crypto: Binance. Acciones: Finnhub (precio y cambio en tiempo real). RSI semanal en acciones puede no estar disponible en plan gratuito. Actualización cada 30 s.{% if not tracking.finnhub_api_key %} <strong>Configura FINNHUB_API_KEY en .env (clave en <a href="https://finnhub.io/register" target="_blank" rel="noopener">finnhub.io</a>).</strong>{% endif %}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .tracking-intro { margin-bottom: 1.5rem; color: var(--c-secondary, #666); }
+  .rsi-extreme { color: #c0392b; font-weight: 600; }
+  .tracking-section-title { margin-top: 2.5rem; margin-bottom: 0.5rem; font-size: 1.5rem; }
+  .tracking-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  .tracking-grid-stocks { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+  .tracking-card {
+    border: 1px solid rgba(0,0,0,.08);
+    border-radius: 12px;
+    padding: 1.25rem;
+    background: var(--bg_light, #f9f9f9);
+  }
+  .tracking-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+  .tracking-asset-name { font-weight: 600; font-size: 1.1rem; }
+  .tracking-symbol { font-size: 0.85rem; color: var(--c-secondary, #888); }
+  .tracking-price { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .tracking-price.price-up { color: #27ae60; }
+  .tracking-price.price-down { color: #c0392b; }
+  .tracking-change-wrap { font-size: 0.95rem; margin-bottom: 0.25rem; }
+  .tracking-change-wrap.change-up { color: #27ae60; }
+  .tracking-change-wrap.change-down { color: #c0392b; }
+  .tracking-rsi-wrap { margin-top: 0.5rem; display: flex; align-items: baseline; flex-wrap: wrap; }
+  .tracking-label { font-size: 0.9rem; color: var(--c-secondary, #666); margin-right: 0.5rem; }
+  .tracking-rsi { font-weight: 700; font-size: 1.1rem; min-width: 2.5em; }
+  .tracking-rsi.rsi-overbought,
+  .tracking-rsi.rsi-oversold { color: #c0392b; }
+  .tracking-status { font-size: 0.8rem; margin-top: 0.5rem; min-height: 1.2em; }
+  .tracking-status.overbought,
+  .tracking-status.oversold { color: #c0392b; font-weight: 600; }
+  .tracking-footer { font-size: 0.85rem; color: var(--c-secondary, #888); margin-top: 2rem; }
+</style>
+
+<script>
+(function() {
+  const RSI_PERIOD = 14;
+  const RSI_OVERBOUGHT = 70;
+  const RSI_OVERSOLD = 30;
+  const POLL_INTERVAL_MS = 30000;
+  const FINNHUB_KEY = {{ tracking.finnhub_api_key | dump | safe }};
+  const STOCK_SYMBOLS = ['LAC', 'PYPL', 'URA', 'META', 'MSTR', 'STRC', 'ORCL', 'UNH', 'ABB'];
+
+  function computeRSI(closes) {
+    if (!closes || closes.length < RSI_PERIOD + 1) return null;
+    const changes = [];
+    for (let i = 1; i < closes.length; i++) changes.push(closes[i] - closes[i - 1]);
+    let gains = 0, losses = 0;
+    for (let i = changes.length - RSI_PERIOD; i < changes.length; i++) {
+      if (changes[i] > 0) gains += changes[i]; else losses -= changes[i];
+    }
+    const avgGain = gains / RSI_PERIOD;
+    const avgLoss = losses / RSI_PERIOD;
+    if (avgLoss === 0) return 100;
+    const rs = avgGain / avgLoss;
+    return 100 - (100 / (1 + rs));
+  }
+
+  function formatPrice(n) {
+    if (n >= 1e6) return (n / 1e6).toFixed(2) + 'M';
+    if (n >= 1e3) return (n / 1e3).toFixed(2) + 'k';
+    return Number(n).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function safeRsi(rsi) {
+    return rsi != null && typeof rsi === 'number' && Number.isFinite(rsi) ? rsi : null;
+  }
+
+  function renderCard(id, price, rsi, statusKey) {
+    var priceEl = document.getElementById('price-' + id);
+    var rsiEl = document.getElementById('rsi-' + id);
+    var statusEl = document.getElementById('status-' + statusKey);
+    rsi = safeRsi(rsi);
+    if (priceEl) priceEl.textContent = price != null ? formatPrice(price) : '—';
+    if (rsiEl) {
+      rsiEl.textContent = rsi != null ? rsi.toFixed(1) : '—';
+      rsiEl.classList.remove('rsi-overbought', 'rsi-oversold');
+      if (rsi != null) {
+        if (rsi >= RSI_OVERBOUGHT) rsiEl.classList.add('rsi-overbought');
+        else if (rsi <= RSI_OVERSOLD) rsiEl.classList.add('rsi-oversold');
+      }
+    }
+    if (statusEl) {
+      statusEl.textContent = '';
+      statusEl.classList.remove('overbought', 'oversold');
+      if (rsi != null) {
+        if (rsi >= RSI_OVERBOUGHT) { statusEl.textContent = 'Sobrecomprado'; statusEl.classList.add('overbought'); }
+        else if (rsi <= RSI_OVERSOLD) { statusEl.textContent = 'Sobrevendido'; statusEl.classList.add('oversold'); }
+      }
+    }
+  }
+
+  function renderStockCard(sym, price, change, changePct, rsi) {
+    const priceEl = document.getElementById('price-' + sym);
+    const changeEl = document.getElementById('change-' + sym);
+    const rsiEl = document.getElementById('rsi-' + sym);
+    const statusEl = document.getElementById('status-' + sym);
+    if (priceEl) {
+      priceEl.textContent = price != null ? Number(price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) : '—';
+      priceEl.classList.remove('price-up', 'price-down');
+      if (change != null) priceEl.classList.add(change >= 0 ? 'price-up' : 'price-down');
+    }
+    if (changeEl) {
+      if (change == null && changePct == null) { changeEl.textContent = '—'; changeEl.classList.remove('change-up', 'change-down'); }
+      else {
+        const sign = change >= 0 ? '+' : '';
+        changeEl.textContent = sign + Number(change).toFixed(2) + ' (' + (changePct >= 0 ? '+' : '') + Number(changePct).toFixed(2) + '%)';
+        changeEl.classList.remove('change-up', 'change-down');
+        changeEl.classList.add(change >= 0 ? 'change-up' : 'change-down');
+      }
+    }
+    rsi = safeRsi(rsi);
+    if (rsiEl) {
+      rsiEl.textContent = rsi != null ? rsi.toFixed(1) : '—';
+      rsiEl.classList.remove('rsi-overbought', 'rsi-oversold');
+      if (rsi != null) {
+        if (rsi >= RSI_OVERBOUGHT) rsiEl.classList.add('rsi-overbought');
+        else if (rsi <= RSI_OVERSOLD) rsiEl.classList.add('rsi-oversold');
+      }
+    }
+    if (statusEl) {
+      statusEl.textContent = '';
+      statusEl.classList.remove('overbought', 'oversold');
+      if (rsi != null) {
+        if (rsi >= RSI_OVERBOUGHT) { statusEl.textContent = 'Sobrecomprado'; statusEl.classList.add('overbought'); }
+        else if (rsi <= RSI_OVERSOLD) { statusEl.textContent = 'Sobrevendido'; statusEl.classList.add('oversold'); }
+      }
+    }
+  }
+
+  async function fetchBinanceKlines(symbol, limit = 20) {
+    const url = 'https://api.binance.com/api/v3/klines?symbol=' + symbol + '&interval=1w&limit=' + limit;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(res.statusText);
+    const data = await res.json();
+    const closes = data.map(c => parseFloat(c[4]));
+    const lastClose = closes[closes.length - 1];
+    const rsi = computeRSI(closes);
+    return { price: lastClose, rsi };
+  }
+
+  async function fetchFinnhubQuote(symbol) {
+    const url = 'https://finnhub.io/api/v1/quote?symbol=' + encodeURIComponent(symbol) + '&token=' + encodeURIComponent(FINNHUB_KEY);
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(res.statusText);
+    return res.json();
+  }
+
+  async function fetchYahooWeeklyCloses(symbol) {
+    var url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(symbol) + '?interval=1wk&range=2y';
+    try {
+      var proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url);
+      var res = await fetch(proxyUrl);
+      if (!res.ok) return null;
+      var data = await res.json();
+      var result = data.chart && data.chart.result && data.chart.result[0];
+      if (!result) return null;
+      var quote = result.indicators && result.indicators.quote && result.indicators.quote[0];
+      if (!quote || !quote.close) return null;
+      var closes = quote.close.filter(function(c) { return c != null; });
+      return closes.length >= RSI_PERIOD + 1 ? closes : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  async function loadBTC() {
+    try {
+      const { price, rsi } = await fetchBinanceKlines('BTCUSDT');
+      renderCard('btc', price, rsi, 'btc');
+    } catch (e) {
+      renderCard('btc', null, null, 'btc');
+      console.warn('BTC load failed', e);
+    }
+  }
+
+  async function loadGold() {
+    try {
+      const { price, rsi } = await fetchBinanceKlines('PAXGUSDT');
+      renderCard('gold', price, rsi, 'gold');
+    } catch (e) {
+      renderCard('gold', null, null, 'gold');
+      console.warn('Gold load failed', e);
+    }
+  }
+
+  async function loadSilver() {
+    try {
+      var proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://api.metals.live/v1/spot/silver');
+      var res = await fetch(proxyUrl);
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      if (!Array.isArray(data) || data.length < RSI_PERIOD + 1) {
+        const price = data[0] && data[0].price != null ? data[0].price : (data && data.price);
+        renderCard('silver', price, null, 'silver');
+        return;
+      }
+      const sorted = data.slice().sort((a, b) => (a.timestamp || a.date) - (b.timestamp || b.date));
+      const closes = sorted.map(d => parseFloat(d.price));
+      const weekly = [];
+      for (var i = 0; i < closes.length; i += 7) weekly.push(closes[Math.min(i + 6, closes.length - 1)]);
+      if (weekly.length < RSI_PERIOD + 1) {
+        renderCard('silver', closes[closes.length - 1], null, 'silver');
+        return;
+      }
+      var rsi = computeRSI(weekly.slice(-(RSI_PERIOD + 1)));
+      renderCard('silver', closes[closes.length - 1], rsi, 'silver');
+    } catch (e) {
+      renderCard('silver', null, null, 'silver');
+    }
+  }
+
+  async function loadStocks() {
+    if (!FINNHUB_KEY) {
+      STOCK_SYMBOLS.forEach(sym => renderStockCard(sym, null, null, null, null));
+      return;
+    }
+    for (const sym of STOCK_SYMBOLS) {
+      try {
+        var quotePromise = fetchFinnhubQuote(sym);
+        var closesPromise = fetchYahooWeeklyCloses(sym);
+        var quote = await quotePromise;
+        var closes = await closesPromise;
+        var c = quote.c;
+        var pc = quote.pc;
+        var d = quote.d;
+        var dp = quote.dp;
+        var rsi = closes ? computeRSI(closes) : null;
+        if (c != null) {
+          renderStockCard(sym, c, d != null ? d : (pc != null ? c - pc : null), dp != null ? dp : null, safeRsi(rsi));
+        } else {
+          renderStockCard(sym, null, null, null, safeRsi(rsi));
+        }
+      } catch (e) {
+        renderStockCard(sym, null, null, null, null);
+        console.warn('Stock ' + sym + ' failed', e);
+      }
+      await new Promise(r => setTimeout(r, 300));
+    }
+  }
+
+  function loadAll() {
+    loadBTC();
+    loadGold();
+    loadSilver();
+    loadStocks();
+  }
+
+  function start() {
+    loadAll();
+    setInterval(loadAll, POLL_INTERVAL_MS);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+})();
+</script>
