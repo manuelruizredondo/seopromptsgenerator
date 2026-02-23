@@ -165,7 +165,7 @@ layout: base.njk
           </div>
         </div>
 
-        <p class="tracking-footer">Crypto: Binance. Acciones: Finnhub (precio y cambio en tiempo real). RSI semanal en acciones puede no estar disponible en plan gratuito. Actualización cada 30 s.{% if not tracking.finnhub_api_key %} <strong>Configura FINNHUB_API_KEY en .env (clave en <a href="https://finnhub.io/register" target="_blank" rel="noopener">finnhub.io</a>).</strong>{% endif %}</p>
+        <p class="tracking-footer">Crypto: Binance. Acciones: Yahoo Finance (sin clave). Opcional: FINNHUB_API_KEY en .env para datos vía Finnhub. Actualización cada 30 s.</p>
       </div>
     </div>
   </div>
@@ -364,6 +364,28 @@ layout: base.njk
     return data;
   }
 
+  async function fetchYahooQuote(symbol) {
+    var url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(symbol) + '?interval=1d&range=5d';
+    try {
+      var data = await fetchWithProxy(url);
+      if (!data) return null;
+      var result = data.chart && data.chart.result && data.chart.result[0];
+      if (!result) return null;
+      var meta = result.meta || {};
+      var quote = result.indicators && result.indicators.quote && result.indicators.quote[0];
+      if (!quote || !quote.close) return null;
+      var closes = quote.close.filter(function(c) { return c != null; });
+      if (closes.length < 2) return null;
+      var c = closes[closes.length - 1];
+      var pc = closes[closes.length - 2];
+      var d = c - pc;
+      var dp = pc ? (d / pc) * 100 : 0;
+      return { c: c, pc: pc, d: d, dp: dp };
+    } catch (e) {
+      return null;
+    }
+  }
+
   async function fetchYahooWeeklyCloses(symbol) {
     var url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(symbol) + '?interval=1wk&range=2y';
     try {
@@ -401,23 +423,26 @@ layout: base.njk
   }
 
   async function loadStocks() {
-    if (!FINNHUB_KEY) {
-      STOCK_SYMBOLS.forEach(sym => renderStockCard(sym, null, null, null, null));
-      return;
-    }
-    for (const sym of STOCK_SYMBOLS) {
+    for (var s = 0; s < STOCK_SYMBOLS.length; s++) {
+      var sym = STOCK_SYMBOLS[s];
       try {
-        var quotePromise = fetchFinnhubQuote(sym);
-        var closesPromise = fetchYahooWeeklyCloses(sym);
-        var quote = await quotePromise;
-        var closes = await closesPromise;
-        var c = quote.c;
-        var pc = quote.pc;
-        var d = quote.d;
-        var dp = quote.dp;
+        var quote = null;
+        if (FINNHUB_KEY) {
+          try {
+            quote = await fetchFinnhubQuote(sym);
+          } catch (e) {}
+        }
+        if (!quote || quote.c == null) {
+          quote = await fetchYahooQuote(sym);
+        }
+        var closes = await fetchYahooWeeklyCloses(sym);
         var rsi = closes ? computeRSI(closes) : null;
+        var c = quote && quote.c;
+        var pc = quote && quote.pc;
+        var d = quote && (quote.d != null ? quote.d : (pc != null ? c - pc : null));
+        var dp = quote && (quote.dp != null ? quote.dp : null);
         if (c != null) {
-          renderStockCard(sym, c, d != null ? d : (pc != null ? c - pc : null), dp != null ? dp : null, safeRsi(rsi));
+          renderStockCard(sym, c, d, dp, safeRsi(rsi));
         } else {
           renderStockCard(sym, null, null, null, safeRsi(rsi));
         }
@@ -425,7 +450,7 @@ layout: base.njk
         renderStockCard(sym, null, null, null, null);
         console.warn('Stock ' + sym + ' failed', e);
       }
-      await new Promise(r => setTimeout(r, 300));
+      await new Promise(function(r) { setTimeout(r, 300); });
     }
   }
 

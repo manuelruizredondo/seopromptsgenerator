@@ -62,6 +62,9 @@ $("#menu-toggle").click(function () {
 });
 
 $(document).ready(function () {
+  $(".menu-mobile-li").on("click", function () {
+    $("body").removeClass("menu-open");
+  });
   initvideo();
 });
 
