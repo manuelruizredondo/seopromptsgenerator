@@ -1,8 +1,8 @@
 ---
-layout: _blog.njk
+layout: downsub.njk
+permalink: /downsub/
 
-
-title: Formación
+title: Cursos
 subtitle: Cursos gratuitos en español sobre design systems
 image: /assets/static/images/7.jpg
 eleventyComputed:

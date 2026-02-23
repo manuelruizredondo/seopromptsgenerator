@@ -4,15 +4,23 @@ eleventyExcludeFromCollections: true
 ---
 <?xml version="1.0" encoding="utf-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    {% for category in collections.categories %}
+
+    {# Ordenar las categorías por longitud del slug (jerárquico) #}
+    {% for category in collections.categories | sort(attribute='slug.length', reverse=false) %}
     <url>
-        <loc>{{global.url}}/{{ category | slug }}</loc>
+        <loc>{{ global.url }}/{{ category | slug }}</loc>
     </url>
     {% endfor %}
-    {% for page in collections.all %}
-    <url>
-        <loc>{{global.url}}{{ page.url | url }}</loc>
-        <lastmod>{{ page.date.toISOString() }}</lastmod>
-    </url>
+
+    {# Ordenar las páginas por la longitud de la URL para mostrar de forma jerárquica #}
+    {% for page in collections.all | sort(attribute='url.length', reverse=false) %}
+        {# Excluir páginas con permalink false u otras condiciones #}
+        {% if page.data.permalink != false %}
+        <url>
+            <loc>{{ global.url }}{{ page.url | url }}</loc>
+            <lastmod>{{ page.date.toISOString() }}</lastmod>
+        </url>
+        {% endif %}
     {% endfor %}
+
 </urlset>

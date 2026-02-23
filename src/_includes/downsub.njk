@@ -1,0 +1,104 @@
+---
+layout: base.njk
+---
+
+
+
+
+
+<div class="section  ptr-200 ">
+
+  <div class="container-global mx-auto">
+    <div class="fluid-5-r mb-8 ">
+     Prompt collection
+    </div>
+    <div class="text-16-r mb-24">
+      Aprende con los mejores
+     </div>
+ </div>
+
+  <div class="container-global mx-auto  ">
+
+<div class="row">
+  <div class="col-xs-12">
+
+    <h1>Descargar Subtítulos de YouTube</h1>
+    <form id="youtube-form">
+      <label for="youtube-url">Ingresa la URL del video de YouTube:</label>
+      <input type="url" id="youtube-url" placeholder="https://www.youtube.com/watch?v=VIDEO_ID" required>
+      <button type="submit">Obtener Subtítulos</button>
+    </form>
+
+
+    <div id="result"></div>
+
+
+  
+  </div>
+</div>
+
+  </div>
+</div>
+
+<script>
+  document.getElementById('youtube-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+  
+  const youtubeUrl = document.getElementById('youtube-url').value;
+  const videoId = getYouTubeVideoId(youtubeUrl);
+
+  if (!videoId) {
+    alert('Por favor ingresa una URL válida de YouTube.');
+    return;
+  }
+
+  getSubtitles(videoId);
+});
+
+function getYouTubeVideoId(url) {
+  const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+  const matches = url.match(regex);
+  return matches ? matches[1] : null;
+}
+
+function getSubtitles(videoId) {
+  const apiKey = 'TU_CLAVE_DE_API_DE_YOUTUBE'; // Reemplaza con tu clave de API de YouTube
+  const url = `https://www.googleapis.com/youtube/v3/captions?videoId=${videoId}&key=${apiKey}`;
+
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      if (data.items.length > 0) {
+        const trackId = data.items[0].id; // Usar el primer track de subtítulos encontrado
+        downloadSubtitles(trackId);
+      } else {
+        document.getElementById('result').innerText = 'No se encontraron subtítulos para este video.';
+      }
+    })
+    .catch(error => {
+      console.error('Error al obtener los subtítulos:', error);
+    });
+}
+
+function downloadSubtitles(trackId) {
+  const apiKey = 'TU_CLAVE_DE_API_DE_YOUTUBE'; // Reemplaza con tu clave de API de YouTube
+  const url = `https://www.googleapis.com/youtube/v3/captions/${trackId}?tfmt=srt&key=${apiKey}`;
+
+  fetch(url)
+    .then(response => response.text())
+    .then(subtitles => {
+      const blob = new Blob([subtitles], { type: 'text/plain' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = 'subtitulos.srt';
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+    })
+    .catch(error => {
+      console.error('Error al descargar los subtítulos:', error);
+    });
+}
+</script>

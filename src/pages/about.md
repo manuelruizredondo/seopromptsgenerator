@@ -1,6 +1,6 @@
 ---
 layout: _about.njk
-permalink: /about/
+
 
 subtitle: Evangelizadores
 title: Nosotros
