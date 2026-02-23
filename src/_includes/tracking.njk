@@ -5,7 +5,7 @@ layout: base.njk
 <div class="section ptr-200">
   <div class="container-global mx-auto">
     <div class="fluid-5-r mb-8">Tracking</div>
-    <div class="text-16-r mb-24">Bitcoin, oro y plata — RSI en vista semanal</div>
+    <div class="text-16-r mb-24">Bitcoin, oro y acciones — RSI en vista semanal</div>
   </div>
 
   <div class="container-global mx-auto">
@@ -41,18 +41,6 @@ layout: base.njk
             <div class="tracking-status" id="status-gold"></div>
           </div>
 
-          <div class="tracking-card" id="card-silver">
-            <div class="tracking-card-header">
-              <span class="tracking-asset-name">Plata</span>
-              <span class="tracking-symbol">XAG/USD</span>
-            </div>
-            <div class="tracking-price" id="price-silver">—</div>
-            <div class="tracking-rsi-wrap">
-              <span class="tracking-label">RSI semanal (14):</span>
-              <span class="tracking-rsi" id="rsi-silver" data-rsi="">—</span>
-            </div>
-            <div class="tracking-status" id="status-silver"></div>
-          </div>
         </div>
 
         <h2 class="tracking-section-title">Acciones</h2>
@@ -356,20 +344,31 @@ layout: base.njk
     return { price: lastClose, rsi };
   }
 
+  async function fetchWithProxy(url) {
+    try {
+      var res = await fetch(url);
+      if (res.ok) return await res.json();
+    } catch (e) {}
+    try {
+      var proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(url);
+      var res = await fetch(proxyUrl);
+      if (res.ok) return await res.json();
+    } catch (e) {}
+    return null;
+  }
+
   async function fetchFinnhubQuote(symbol) {
-    const url = 'https://finnhub.io/api/v1/quote?symbol=' + encodeURIComponent(symbol) + '&token=' + encodeURIComponent(FINNHUB_KEY);
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(res.statusText);
-    return res.json();
+    var url = 'https://finnhub.io/api/v1/quote?symbol=' + encodeURIComponent(symbol) + '&token=' + encodeURIComponent(FINNHUB_KEY);
+    var data = await fetchWithProxy(url);
+    if (!data) throw new Error('Finnhub no disponible');
+    return data;
   }
 
   async function fetchYahooWeeklyCloses(symbol) {
     var url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(symbol) + '?interval=1wk&range=2y';
     try {
-      var proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url);
-      var res = await fetch(proxyUrl);
-      if (!res.ok) return null;
-      var data = await res.json();
+      var data = await fetchWithProxy(url);
+      if (!data) return null;
       var result = data.chart && data.chart.result && data.chart.result[0];
       if (!result) return null;
       var quote = result.indicators && result.indicators.quote && result.indicators.quote[0];
@@ -398,47 +397,6 @@ layout: base.njk
     } catch (e) {
       renderCard('gold', null, null, 'gold');
       console.warn('Gold load failed', e);
-    }
-  }
-
-  async function loadSilver() {
-    var targetUrl = 'https://api.metals.live/v1/spot/silver';
-    var proxies = [
-      'https://corsproxy.io/?' + encodeURIComponent(targetUrl),
-      'https://api.allorigins.win/raw?url=' + encodeURIComponent(targetUrl)
-    ];
-    var data = null;
-    for (var p = 0; p < proxies.length; p++) {
-      try {
-        var res = await fetch(proxies[p]);
-        if (res.ok) {
-          data = await res.json();
-          break;
-        }
-      } catch (_) {}
-    }
-    try {
-      if (!data) {
-        renderCard('silver', null, null, 'silver');
-        return;
-      }
-      if (!Array.isArray(data) || data.length < RSI_PERIOD + 1) {
-        var price = data[0] && data[0].price != null ? data[0].price : (data && data.price);
-        renderCard('silver', price, null, 'silver');
-        return;
-      }
-      var sorted = data.slice().sort(function(a, b) { return (a.timestamp || a.date) - (b.timestamp || b.date); });
-      var closes = sorted.map(function(d) { return parseFloat(d.price); });
-      var weekly = [];
-      for (var i = 0; i < closes.length; i += 7) weekly.push(closes[Math.min(i + 6, closes.length - 1)]);
-      if (weekly.length < RSI_PERIOD + 1) {
-        renderCard('silver', closes[closes.length - 1], null, 'silver');
-        return;
-      }
-      var rsi = computeRSI(weekly.slice(-(RSI_PERIOD + 1)));
-      renderCard('silver', closes[closes.length - 1], rsi, 'silver');
-    } catch (e) {
-      renderCard('silver', null, null, 'silver');
     }
   }
 
@@ -474,7 +432,6 @@ layout: base.njk
   function loadAll() {
     loadBTC();
     loadGold();
-    loadSilver();
     loadStocks();
   }
 
