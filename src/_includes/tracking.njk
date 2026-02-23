@@ -200,6 +200,14 @@ layout: base.njk
     padding: 1.25rem;
     background: var(--bg_light, #f9f9f9);
   }
+  .tracking-card.card-oversold {
+    background: rgba(192, 57, 43, 0.12);
+    border-color: rgba(192, 57, 43, 0.5);
+  }
+  .tracking-card.card-overbought {
+    background: rgba(39, 174, 96, 0.12);
+    border-color: rgba(39, 174, 96, 0.5);
+  }
   .tracking-card-header {
     display: flex;
     justify-content: space-between;
@@ -220,7 +228,7 @@ layout: base.njk
   .tracking-rsi.rsi-overbought,
   .tracking-rsi.rsi-oversold { color: #c0392b; }
   .tracking-status { font-size: 0.8rem; margin-top: 0.5rem; min-height: 1.2em; }
-  .tracking-status.overbought,
+  .tracking-status.overbought { color: #27ae60; font-weight: 600; }
   .tracking-status.oversold { color: #c0392b; font-weight: 600; }
   .tracking-footer { font-size: 0.85rem; color: var(--c-secondary, #888); margin-top: 2rem; }
 </style>
@@ -260,10 +268,18 @@ layout: base.njk
   }
 
   function renderCard(id, price, rsi, statusKey) {
+    var cardEl = document.getElementById('card-' + id);
     var priceEl = document.getElementById('price-' + id);
     var rsiEl = document.getElementById('rsi-' + id);
     var statusEl = document.getElementById('status-' + statusKey);
     rsi = safeRsi(rsi);
+    if (cardEl) {
+      cardEl.classList.remove('card-overbought', 'card-oversold');
+      if (rsi != null) {
+        if (rsi >= RSI_OVERBOUGHT) cardEl.classList.add('card-overbought');
+        else if (rsi <= RSI_OVERSOLD) cardEl.classList.add('card-oversold');
+      }
+    }
     if (priceEl) priceEl.textContent = price != null ? formatPrice(price) : '—';
     if (rsiEl) {
       rsiEl.textContent = rsi != null ? rsi.toFixed(1) : '—';
@@ -284,10 +300,19 @@ layout: base.njk
   }
 
   function renderStockCard(sym, price, change, changePct, rsi) {
-    const priceEl = document.getElementById('price-' + sym);
-    const changeEl = document.getElementById('change-' + sym);
-    const rsiEl = document.getElementById('rsi-' + sym);
-    const statusEl = document.getElementById('status-' + sym);
+    var cardEl = document.querySelector('.tracking-card-stock[data-symbol="' + sym + '"]');
+    var priceEl = document.getElementById('price-' + sym);
+    var changeEl = document.getElementById('change-' + sym);
+    var rsiEl = document.getElementById('rsi-' + sym);
+    var statusEl = document.getElementById('status-' + sym);
+    rsi = safeRsi(rsi);
+    if (cardEl) {
+      cardEl.classList.remove('card-overbought', 'card-oversold');
+      if (rsi != null) {
+        if (rsi >= RSI_OVERBOUGHT) cardEl.classList.add('card-overbought');
+        else if (rsi <= RSI_OVERSOLD) cardEl.classList.add('card-oversold');
+      }
+    }
     if (priceEl) {
       priceEl.textContent = price != null ? Number(price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) : '—';
       priceEl.classList.remove('price-up', 'price-down');
@@ -302,7 +327,6 @@ layout: base.njk
         changeEl.classList.add(change >= 0 ? 'change-up' : 'change-down');
       }
     }
-    rsi = safeRsi(rsi);
     if (rsiEl) {
       rsiEl.textContent = rsi != null ? rsi.toFixed(1) : '—';
       rsiEl.classList.remove('rsi-overbought', 'rsi-oversold');
@@ -378,19 +402,34 @@ layout: base.njk
   }
 
   async function loadSilver() {
+    var targetUrl = 'https://api.metals.live/v1/spot/silver';
+    var proxies = [
+      'https://corsproxy.io/?' + encodeURIComponent(targetUrl),
+      'https://api.allorigins.win/raw?url=' + encodeURIComponent(targetUrl)
+    ];
+    var data = null;
+    for (var p = 0; p < proxies.length; p++) {
+      try {
+        var res = await fetch(proxies[p]);
+        if (res.ok) {
+          data = await res.json();
+          break;
+        }
+      } catch (_) {}
+    }
     try {
-      var proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://api.metals.live/v1/spot/silver');
-      var res = await fetch(proxyUrl);
-      if (!res.ok) throw new Error();
-      const data = await res.json();
+      if (!data) {
+        renderCard('silver', null, null, 'silver');
+        return;
+      }
       if (!Array.isArray(data) || data.length < RSI_PERIOD + 1) {
-        const price = data[0] && data[0].price != null ? data[0].price : (data && data.price);
+        var price = data[0] && data[0].price != null ? data[0].price : (data && data.price);
         renderCard('silver', price, null, 'silver');
         return;
       }
-      const sorted = data.slice().sort((a, b) => (a.timestamp || a.date) - (b.timestamp || b.date));
-      const closes = sorted.map(d => parseFloat(d.price));
-      const weekly = [];
+      var sorted = data.slice().sort(function(a, b) { return (a.timestamp || a.date) - (b.timestamp || b.date); });
+      var closes = sorted.map(function(d) { return parseFloat(d.price); });
+      var weekly = [];
       for (var i = 0; i < closes.length; i += 7) weekly.push(closes[Math.min(i + 6, closes.length - 1)]);
       if (weekly.length < RSI_PERIOD + 1) {
         renderCard('silver', closes[closes.length - 1], null, 'silver');
