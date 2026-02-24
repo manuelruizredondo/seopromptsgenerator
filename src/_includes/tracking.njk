@@ -165,7 +165,7 @@ layout: base.njk
           </div>
         </div>
 
-        <p class="tracking-footer">Crypto: Binance. Acciones: Yahoo Finance (sin clave). Opcional: FINNHUB_API_KEY en .env para datos vía Finnhub. Actualización cada 30 s.</p>
+        <p class="tracking-footer">Crypto: Binance. Acciones: Yahoo (proxy en Netlify si despliegas ahí; si no, puede fallar por CORS). Opcional: FINNHUB_API_KEY. Actualización cada 30 s.</p>
       </div>
     </div>
   </div>
@@ -344,16 +344,36 @@ layout: base.njk
     return { price: lastClose, rsi };
   }
 
+  async function fetchYahooChart(symbol, interval, range) {
+    var base = (typeof window !== 'undefined' && window.location && window.location.origin) ? window.location.origin : '';
+    var serverlessUrl = base + '/.netlify/functions/yahoo-chart?symbol=' + encodeURIComponent(symbol) + '&interval=' + encodeURIComponent(interval) + '&range=' + encodeURIComponent(range);
+    try {
+      var res = await fetch(serverlessUrl);
+      if (res.ok) return await res.json();
+    } catch (e) {}
+    var url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(symbol) + '?interval=' + encodeURIComponent(interval) + '&range=' + encodeURIComponent(range);
+    return await fetchWithProxy(url);
+  }
+
   async function fetchWithProxy(url) {
+    var parsed;
     try {
       var res = await fetch(url);
       if (res.ok) return await res.json();
     } catch (e) {}
-    try {
-      var proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(url);
-      var res = await fetch(proxyUrl);
-      if (res.ok) return await res.json();
-    } catch (e) {}
+    var proxies = [
+      'https://api.allorigins.win/raw?url=' + encodeURIComponent(url),
+      'https://corsproxy.io/?' + encodeURIComponent(url)
+    ];
+    for (var i = 0; i < proxies.length; i++) {
+      try {
+        var res = await fetch(proxies[i]);
+        if (!res.ok) continue;
+        var text = await res.text();
+        try { parsed = JSON.parse(text); } catch (e) { parsed = null; }
+        if (parsed) return parsed;
+      } catch (e) {}
+    }
     return null;
   }
 
@@ -365,9 +385,8 @@ layout: base.njk
   }
 
   async function fetchYahooQuote(symbol) {
-    var url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(symbol) + '?interval=1d&range=5d';
     try {
-      var data = await fetchWithProxy(url);
+      var data = await fetchYahooChart(symbol, '1d', '5d');
       if (!data) return null;
       var result = data.chart && data.chart.result && data.chart.result[0];
       if (!result) return null;
@@ -387,9 +406,8 @@ layout: base.njk
   }
 
   async function fetchYahooWeeklyCloses(symbol) {
-    var url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(symbol) + '?interval=1wk&range=2y';
     try {
-      var data = await fetchWithProxy(url);
+      var data = await fetchYahooChart(symbol, '1wk', '2y');
       if (!data) return null;
       var result = data.chart && data.chart.result && data.chart.result[0];
       if (!result) return null;
