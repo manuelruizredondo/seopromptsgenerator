@@ -343,7 +343,7 @@ layout: base.njk
           <div class="tracking-card tracking-card-stock card-oversold" id="card-weiss-ov-5"><div class="tracking-card-header"><span class="tracking-asset-name" id="weiss-ov-5-sym">—</span><span class="tracking-symbol" id="weiss-ov-5-name">—</span></div><div class="tracking-price" id="price-weiss-ov-5">—</div><div class="tracking-change-wrap" id="change-weiss-ov-5">—</div><div class="tracking-rsi-wrap"><span class="tracking-label">RSI semanal:</span><span class="tracking-rsi" id="rsi-weiss-ov-5">—</span></div><div class="tracking-status" id="status-weiss-ov-5">Sobrevendido</div></div>
         </div>
 
-        <p class="tracking-footer">Crypto: Binance. Acciones: Yahoo (proxy en Netlify si despliegas ahí; si no, puede fallar por CORS). Opcional: FINNHUB_API_KEY. Actualización cada 30 s.</p>
+        <p class="tracking-footer">Crypto: Binance. Acciones: Yahoo (proxy en Netlify). Weiss en sobreventa: RSI semanal por Finnhub (/.netlify/functions/finnhub-indicator; requiere FINNHUB_API_KEY en Netlify). Opcional FINNHUB_API_KEY para cotizaciones. Actualización cada 30 s.</p>
       </div>
     </div>
   </div>
@@ -571,6 +571,23 @@ layout: base.njk
     return data;
   }
 
+  /** RSI semanal desde Finnhub (vía Netlify function). Devuelve número o null. */
+  async function fetchFinnhubWeeklyRSI(symbol) {
+    var base = (typeof window !== 'undefined' && window.location && window.location.origin) ? window.location.origin : '';
+    var url = base + '/.netlify/functions/finnhub-indicator?symbol=' + encodeURIComponent(symbol) + '&resolution=W&indicator=RSI';
+    try {
+      var res = await fetch(url);
+      if (!res.ok) return null;
+      var data = await res.json();
+      var arr = data.rsi || data.RSI;
+      if (!Array.isArray(arr) || arr.length === 0) return null;
+      var last = arr[arr.length - 1];
+      return typeof last === 'number' && !Number.isNaN(last) ? last : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
   async function fetchYahooQuote(symbol) {
     try {
       var data = await fetchYahooChart(symbol, '1d', '5d');
@@ -718,14 +735,18 @@ layout: base.njk
           try { quote = await fetchFinnhubQuote(sym); } catch (e) {}
         }
         if (!quote || quote.c == null) quote = await fetchYahooQuote(sym);
-        var closes = await fetchYahooWeeklyCloses(sym);
-        var rsi = closes ? computeRSI(closes) : null;
+        var rsi = await fetchFinnhubWeeklyRSI(sym);
+        if (rsi == null) {
+          var closes = await fetchYahooWeeklyCloses(sym);
+          rsi = closes ? computeRSI(closes) : null;
+        }
+        rsi = safeRsi(rsi);
         var c = quote && quote.c;
         var pc = quote && quote.pc;
         var d = quote && (quote.d != null ? quote.d : (pc != null ? c - pc : null));
         var dp = quote && (quote.dp != null ? quote.dp : null);
-        renderStockCard(sym, c, d, dp, safeRsi(rsi));
-        results.push({ sym: sym, name: WEISS_NAMES[sym] || sym, c: c, d: d, dp: dp, rsi: safeRsi(rsi) });
+        renderStockCard(sym, c, d, dp, rsi);
+        results.push({ sym: sym, name: WEISS_NAMES[sym] || sym, c: c, d: d, dp: dp, rsi: rsi });
       } catch (e) {
         renderStockCard(sym, null, null, null, null);
         results.push({ sym: sym, name: WEISS_NAMES[sym] || sym, c: null, d: null, dp: null, rsi: null });
