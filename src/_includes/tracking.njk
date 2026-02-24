@@ -333,6 +333,16 @@ layout: base.njk
           <div class="tracking-card tracking-card-stock" data-symbol="DUK"><div class="tracking-card-header"><span class="tracking-asset-name">DUK</span><span class="tracking-symbol">Duke Energy</span></div><div class="tracking-price" id="price-DUK">—</div><div class="tracking-change-wrap" id="change-DUK">—</div><div class="tracking-rsi-wrap"><span class="tracking-label">RSI semanal:</span><span class="tracking-rsi" id="rsi-DUK">—</span></div><div class="tracking-status" id="status-DUK"></div></div>
         </div>
 
+        <h2 class="tracking-section-title">Weiss en sobreventa (RSI semanal ≤ 30)</h2>
+        <p class="tracking-intro">Hasta 5 acciones del método Geraldine Weiss que están en sobreventa en vista semanal. Ordenadas por RSI de menor a mayor.</p>
+        <div class="tracking-grid tracking-grid-stocks" id="tracking-weiss-oversold">
+          <div class="tracking-card tracking-card-stock card-oversold" id="card-weiss-ov-1"><div class="tracking-card-header"><span class="tracking-asset-name" id="weiss-ov-1-sym">—</span><span class="tracking-symbol" id="weiss-ov-1-name">—</span></div><div class="tracking-price" id="price-weiss-ov-1">—</div><div class="tracking-change-wrap" id="change-weiss-ov-1">—</div><div class="tracking-rsi-wrap"><span class="tracking-label">RSI semanal:</span><span class="tracking-rsi" id="rsi-weiss-ov-1">—</span></div><div class="tracking-status" id="status-weiss-ov-1">Sobrevendido</div></div>
+          <div class="tracking-card tracking-card-stock card-oversold" id="card-weiss-ov-2"><div class="tracking-card-header"><span class="tracking-asset-name" id="weiss-ov-2-sym">—</span><span class="tracking-symbol" id="weiss-ov-2-name">—</span></div><div class="tracking-price" id="price-weiss-ov-2">—</div><div class="tracking-change-wrap" id="change-weiss-ov-2">—</div><div class="tracking-rsi-wrap"><span class="tracking-label">RSI semanal:</span><span class="tracking-rsi" id="rsi-weiss-ov-2">—</span></div><div class="tracking-status" id="status-weiss-ov-2">Sobrevendido</div></div>
+          <div class="tracking-card tracking-card-stock card-oversold" id="card-weiss-ov-3"><div class="tracking-card-header"><span class="tracking-asset-name" id="weiss-ov-3-sym">—</span><span class="tracking-symbol" id="weiss-ov-3-name">—</span></div><div class="tracking-price" id="price-weiss-ov-3">—</div><div class="tracking-change-wrap" id="change-weiss-ov-3">—</div><div class="tracking-rsi-wrap"><span class="tracking-label">RSI semanal:</span><span class="tracking-rsi" id="rsi-weiss-ov-3">—</span></div><div class="tracking-status" id="status-weiss-ov-3">Sobrevendido</div></div>
+          <div class="tracking-card tracking-card-stock card-oversold" id="card-weiss-ov-4"><div class="tracking-card-header"><span class="tracking-asset-name" id="weiss-ov-4-sym">—</span><span class="tracking-symbol" id="weiss-ov-4-name">—</span></div><div class="tracking-price" id="price-weiss-ov-4">—</div><div class="tracking-change-wrap" id="change-weiss-ov-4">—</div><div class="tracking-rsi-wrap"><span class="tracking-label">RSI semanal:</span><span class="tracking-rsi" id="rsi-weiss-ov-4">—</span></div><div class="tracking-status" id="status-weiss-ov-4">Sobrevendido</div></div>
+          <div class="tracking-card tracking-card-stock card-oversold" id="card-weiss-ov-5"><div class="tracking-card-header"><span class="tracking-asset-name" id="weiss-ov-5-sym">—</span><span class="tracking-symbol" id="weiss-ov-5-name">—</span></div><div class="tracking-price" id="price-weiss-ov-5">—</div><div class="tracking-change-wrap" id="change-weiss-ov-5">—</div><div class="tracking-rsi-wrap"><span class="tracking-label">RSI semanal:</span><span class="tracking-rsi" id="rsi-weiss-ov-5">—</span></div><div class="tracking-status" id="status-weiss-ov-5">Sobrevendido</div></div>
+        </div>
+
         <p class="tracking-footer">Crypto: Binance. Acciones: Yahoo (proxy en Netlify si despliegas ahí; si no, puede fallar por CORS). Opcional: FINNHUB_API_KEY. Actualización cada 30 s.</p>
       </div>
     </div>
@@ -398,6 +408,8 @@ layout: base.njk
   const FINNHUB_KEY = {{ tracking.finnhub_api_key | dump | safe }};
   const STOCK_SYMBOLS = ['LAC', 'PYPL', 'URA', 'META', 'MSTR', 'STRC', 'ORCL', 'UNH', 'NVAX', 'TSLA', 'PANW', 'AMZN', 'ASML', 'NKE', 'UPS', 'NVDA', 'MA', 'GOOG', 'CVS'];
   const WEISS_SYMBOLS = ['JNJ', 'PG', 'KO', 'PEP', 'XOM', 'CVX', 'MCD', 'WMT', 'ABT', 'ABBV', 'O', 'PM', 'JPM', 'VZ', 'T', 'HD', 'IBM', 'MMM', 'SO', 'DUK'];
+  const WEISS_NAMES = { JNJ: 'Johnson & Johnson', PG: 'Procter & Gamble', KO: 'Coca-Cola', PEP: 'PepsiCo', XOM: 'Exxon Mobil', CVX: 'Chevron', MCD: "McDonald's", WMT: 'Walmart', ABT: 'Abbott', ABBV: 'AbbVie', O: 'Realty Income', PM: 'Philip Morris', JPM: 'JPMorgan Chase', VZ: 'Verizon', T: 'AT&T', HD: 'Home Depot', IBM: 'IBM', MMM: '3M', SO: 'Southern Company', DUK: 'Duke Energy' };
+  const RSI_OVERSOLD_MAX = 30;
 
   function computeRSI(closes) {
     if (!closes || closes.length < RSI_PERIOD + 1) return null;
@@ -657,7 +669,47 @@ layout: base.njk
     }
   }
 
+  function renderWeissOversoldSlot(slot, data) {
+    var n = slot + 1;
+    var symEl = document.getElementById('weiss-ov-' + n + '-sym');
+    var nameEl = document.getElementById('weiss-ov-' + n + '-name');
+    var priceEl = document.getElementById('price-weiss-ov-' + n);
+    var changeEl = document.getElementById('change-weiss-ov-' + n);
+    var rsiEl = document.getElementById('rsi-weiss-ov-' + n);
+    var statusEl = document.getElementById('status-weiss-ov-' + n);
+    var cardEl = document.getElementById('card-weiss-ov-' + n);
+    if (!data) {
+      if (symEl) symEl.textContent = '—';
+      if (nameEl) nameEl.textContent = '—';
+      if (priceEl) priceEl.textContent = '—';
+      if (changeEl) { changeEl.textContent = '—'; changeEl.classList.remove('change-up', 'change-down'); }
+      if (rsiEl) rsiEl.textContent = '—';
+      if (statusEl) statusEl.textContent = '—';
+      if (cardEl) cardEl.classList.remove('card-oversold');
+      return;
+    }
+    if (symEl) symEl.textContent = data.sym;
+    if (nameEl) nameEl.textContent = data.name;
+    if (priceEl) priceEl.textContent = data.c != null ? Number(data.c).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) : '—';
+    if (priceEl) priceEl.classList.remove('price-up', 'price-down');
+    if (data.d != null && priceEl) priceEl.classList.add(data.d >= 0 ? 'price-up' : 'price-down');
+    if (changeEl) {
+      if (data.d == null && data.dp == null) { changeEl.textContent = '—'; changeEl.classList.remove('change-up', 'change-down'); }
+      else {
+        var sign = data.d >= 0 ? '+' : '';
+        changeEl.textContent = sign + Number(data.d).toFixed(2) + ' (' + (data.dp >= 0 ? '+' : '') + Number(data.dp).toFixed(2) + '%)';
+        changeEl.classList.remove('change-up', 'change-down');
+        changeEl.classList.add(data.d >= 0 ? 'change-up' : 'change-down');
+      }
+    }
+    if (rsiEl) rsiEl.textContent = data.rsi != null ? data.rsi.toFixed(1) : '—';
+    if (rsiEl) { rsiEl.classList.remove('rsi-overbought', 'rsi-oversold'); if (data.rsi != null) rsiEl.classList.add('rsi-oversold'); }
+    if (statusEl) statusEl.textContent = data.rsi != null ? 'Sobrevendido' : '';
+    if (cardEl) cardEl.classList.add('card-oversold');
+  }
+
   async function loadWeissStocks() {
+    var results = [];
     for (var s = 0; s < WEISS_SYMBOLS.length; s++) {
       var sym = WEISS_SYMBOLS[s];
       try {
@@ -672,13 +724,17 @@ layout: base.njk
         var pc = quote && quote.pc;
         var d = quote && (quote.d != null ? quote.d : (pc != null ? c - pc : null));
         var dp = quote && (quote.dp != null ? quote.dp : null);
-        if (c != null) renderStockCard(sym, c, d, dp, safeRsi(rsi));
-        else renderStockCard(sym, null, null, null, safeRsi(rsi));
+        renderStockCard(sym, c, d, dp, safeRsi(rsi));
+        results.push({ sym: sym, name: WEISS_NAMES[sym] || sym, c: c, d: d, dp: dp, rsi: safeRsi(rsi) });
       } catch (e) {
         renderStockCard(sym, null, null, null, null);
+        results.push({ sym: sym, name: WEISS_NAMES[sym] || sym, c: null, d: null, dp: null, rsi: null });
       }
       await new Promise(function(r) { setTimeout(r, 300); });
     }
+    var oversold = results.filter(function(r) { return r.rsi != null && r.rsi <= RSI_OVERSOLD_MAX; });
+    oversold.sort(function(a, b) { return a.rsi - b.rsi; });
+    for (var i = 0; i < 5; i++) renderWeissOversoldSlot(i, oversold[i] || null);
   }
 
   function loadAll() {
