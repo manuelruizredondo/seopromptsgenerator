@@ -309,7 +309,36 @@ layout: base.njk
         </div>
 
         <h2 class="tracking-section-title">Método Geraldine Weiss</h2>
-        <p class="tracking-intro">20 blue chips de dividendos: empresas con historial de pago y crecimiento de dividendos (valor por yield). Misma vista: precio, cambio diario y RSI semanal.</p>
+        <p class="tracking-intro">20 blue chips de dividendos: empresas con historial de pago y crecimiento de dividendos (valor por yield). Misma vista: precio, cambio diario, RSI semanal y mín. 52 sem. Análisis completo (12 años, fundamental) de <a href="https://geraldineweiss.onrender.com/" target="_blank" rel="noopener">geraldineweiss.onrender.com</a>.</p>
+        <div class="tracking-weiss-embed">
+          <label for="weiss-ticker-select" class="tracking-label">Ver análisis 12 años + fundamental:</label>
+          <select id="weiss-ticker-select" class="tracking-select" aria-label="Seleccionar ticker Weiss">
+            <option value="">— Elige una acción —</option>
+            <option value="JNJ">JNJ – Johnson &amp; Johnson</option>
+            <option value="PG">PG – Procter &amp; Gamble</option>
+            <option value="KO">KO – Coca-Cola</option>
+            <option value="PEP">PEP – PepsiCo</option>
+            <option value="XOM">XOM – Exxon Mobil</option>
+            <option value="CVX">CVX – Chevron</option>
+            <option value="MCD">MCD – McDonald's</option>
+            <option value="WMT">WMT – Walmart</option>
+            <option value="ABT">ABT – Abbott</option>
+            <option value="ABBV">ABBV – AbbVie</option>
+            <option value="O">O – Realty Income</option>
+            <option value="PM">PM – Philip Morris</option>
+            <option value="JPM">JPM – JPMorgan Chase</option>
+            <option value="VZ">VZ – Verizon</option>
+            <option value="T">T – AT&amp;T</option>
+            <option value="HD">HD – Home Depot</option>
+            <option value="IBM">IBM – IBM</option>
+            <option value="MMM">MMM – 3M</option>
+            <option value="SO">SO – Southern Company</option>
+            <option value="DUK">DUK – Duke Energy</option>
+          </select>
+          <div class="tracking-weiss-iframe-wrap">
+            <iframe id="weiss-analysis-iframe" title="Análisis Geraldine Weiss 12 años" src="about:blank" sandbox="allow-scripts allow-same-origin"></iframe>
+          </div>
+        </div>
         <div class="tracking-grid tracking-grid-stocks" id="tracking-weiss">
           <div class="tracking-card tracking-card-stock" data-symbol="JNJ"><div class="tracking-card-header"><span class="tracking-asset-name">JNJ</span><span class="tracking-symbol">Johnson & Johnson</span></div><div class="tracking-price" id="price-JNJ">—</div><div class="tracking-change-wrap" id="change-JNJ">—</div><div class="tracking-rsi-wrap"><span class="tracking-label">RSI semanal:</span><span class="tracking-rsi" id="rsi-JNJ">—</span></div><div class="tracking-low52-wrap"><span class="tracking-label">Mín. 52 sem:</span><span class="tracking-low52" id="low52-JNJ">—</span></div><div class="tracking-status" id="status-JNJ"></div></div>
           <div class="tracking-card tracking-card-stock" data-symbol="PG"><div class="tracking-card-header"><span class="tracking-asset-name">PG</span><span class="tracking-symbol">Procter & Gamble</span></div><div class="tracking-price" id="price-PG">—</div><div class="tracking-change-wrap" id="change-PG">—</div><div class="tracking-rsi-wrap"><span class="tracking-label">RSI semanal:</span><span class="tracking-rsi" id="rsi-PG">—</span></div><div class="tracking-low52-wrap"><span class="tracking-label">Mín. 52 sem:</span><span class="tracking-low52" id="low52-PG">—</span></div><div class="tracking-status" id="status-PG"></div></div>
@@ -336,11 +365,11 @@ layout: base.njk
         <h2 class="tracking-section-title">Weiss en sobreventa (RSI semanal ≤ 30)</h2>
         <p class="tracking-intro">Hasta 5 acciones del método Geraldine Weiss que están en sobreventa en vista semanal. Ordenadas por RSI de menor a mayor.</p>
         <div class="tracking-grid tracking-grid-stocks" id="tracking-weiss-oversold">
-          <div class="tracking-card tracking-card-stock card-oversold" id="card-weiss-ov-1"><div class="tracking-card-header"><span class="tracking-asset-name" id="weiss-ov-1-sym">—</span><span class="tracking-symbol" id="weiss-ov-1-name">—</span></div><div class="tracking-price" id="price-weiss-ov-1">—</div><div class="tracking-change-wrap" id="change-weiss-ov-1">—</div><div class="tracking-rsi-wrap"><span class="tracking-label">RSI semanal:</span><span class="tracking-rsi" id="rsi-weiss-ov-1">—</span></div><div class="tracking-low52-wrap"><span class="tracking-label">Mín. 52 sem:</span><span class="tracking-low52" id="low52-weiss-ov-1">—</span></div><div class="tracking-status" id="status-weiss-ov-1">Sobrevendido</div></div>
-          <div class="tracking-card tracking-card-stock card-oversold" id="card-weiss-ov-2"><div class="tracking-card-header"><span class="tracking-asset-name" id="weiss-ov-2-sym">—</span><span class="tracking-symbol" id="weiss-ov-2-name">—</span></div><div class="tracking-price" id="price-weiss-ov-2">—</div><div class="tracking-change-wrap" id="change-weiss-ov-2">—</div><div class="tracking-rsi-wrap"><span class="tracking-label">RSI semanal:</span><span class="tracking-rsi" id="rsi-weiss-ov-2">—</span></div><div class="tracking-low52-wrap"><span class="tracking-label">Mín. 52 sem:</span><span class="tracking-low52" id="low52-weiss-ov-2">—</span></div><div class="tracking-status" id="status-weiss-ov-2">Sobrevendido</div></div>
-          <div class="tracking-card tracking-card-stock card-oversold" id="card-weiss-ov-3"><div class="tracking-card-header"><span class="tracking-asset-name" id="weiss-ov-3-sym">—</span><span class="tracking-symbol" id="weiss-ov-3-name">—</span></div><div class="tracking-price" id="price-weiss-ov-3">—</div><div class="tracking-change-wrap" id="change-weiss-ov-3">—</div><div class="tracking-rsi-wrap"><span class="tracking-label">RSI semanal:</span><span class="tracking-rsi" id="rsi-weiss-ov-3">—</span></div><div class="tracking-low52-wrap"><span class="tracking-label">Mín. 52 sem:</span><span class="tracking-low52" id="low52-weiss-ov-3">—</span></div><div class="tracking-status" id="status-weiss-ov-3">Sobrevendido</div></div>
-          <div class="tracking-card tracking-card-stock card-oversold" id="card-weiss-ov-4"><div class="tracking-card-header"><span class="tracking-asset-name" id="weiss-ov-4-sym">—</span><span class="tracking-symbol" id="weiss-ov-4-name">—</span></div><div class="tracking-price" id="price-weiss-ov-4">—</div><div class="tracking-change-wrap" id="change-weiss-ov-4">—</div><div class="tracking-rsi-wrap"><span class="tracking-label">RSI semanal:</span><span class="tracking-rsi" id="rsi-weiss-ov-4">—</span></div><div class="tracking-low52-wrap"><span class="tracking-label">Mín. 52 sem:</span><span class="tracking-low52" id="low52-weiss-ov-4">—</span></div><div class="tracking-status" id="status-weiss-ov-4">Sobrevendido</div></div>
-          <div class="tracking-card tracking-card-stock card-oversold" id="card-weiss-ov-5"><div class="tracking-card-header"><span class="tracking-asset-name" id="weiss-ov-5-sym">—</span><span class="tracking-symbol" id="weiss-ov-5-name">—</span></div><div class="tracking-price" id="price-weiss-ov-5">—</div><div class="tracking-change-wrap" id="change-weiss-ov-5">—</div><div class="tracking-rsi-wrap"><span class="tracking-label">RSI semanal:</span><span class="tracking-rsi" id="rsi-weiss-ov-5">—</span></div><div class="tracking-low52-wrap"><span class="tracking-label">Mín. 52 sem:</span><span class="tracking-low52" id="low52-weiss-ov-5">—</span></div><div class="tracking-status" id="status-weiss-ov-5">Sobrevendido</div></div>
+          <div class="tracking-card tracking-card-stock card-oversold" id="card-weiss-ov-1"><div class="tracking-card-header"><span class="tracking-asset-name" id="weiss-ov-1-sym">—</span><span class="tracking-symbol" id="weiss-ov-1-name">—</span></div><div class="tracking-price" id="price-weiss-ov-1">—</div><div class="tracking-change-wrap" id="change-weiss-ov-1">—</div><div class="tracking-rsi-wrap"><span class="tracking-label">RSI semanal:</span><span class="tracking-rsi" id="rsi-weiss-ov-1">—</span></div><div class="tracking-low52-wrap"><span class="tracking-label">Mín. 52 sem:</span><span class="tracking-low52" id="low52-weiss-ov-1">—</span></div><a id="weiss-ov-1-link" class="tracking-weiss-link" href="#" target="_blank" rel="noopener" style="display:none;">Análisis 12a</a><div class="tracking-status" id="status-weiss-ov-1">Sobrevendido</div></div>
+          <div class="tracking-card tracking-card-stock card-oversold" id="card-weiss-ov-2"><div class="tracking-card-header"><span class="tracking-asset-name" id="weiss-ov-2-sym">—</span><span class="tracking-symbol" id="weiss-ov-2-name">—</span></div><div class="tracking-price" id="price-weiss-ov-2">—</div><div class="tracking-change-wrap" id="change-weiss-ov-2">—</div><div class="tracking-rsi-wrap"><span class="tracking-label">RSI semanal:</span><span class="tracking-rsi" id="rsi-weiss-ov-2">—</span></div><div class="tracking-low52-wrap"><span class="tracking-label">Mín. 52 sem:</span><span class="tracking-low52" id="low52-weiss-ov-2">—</span></div><a id="weiss-ov-2-link" class="tracking-weiss-link" href="#" target="_blank" rel="noopener" style="display:none;">Análisis 12a</a><div class="tracking-status" id="status-weiss-ov-2">Sobrevendido</div></div>
+          <div class="tracking-card tracking-card-stock card-oversold" id="card-weiss-ov-3"><div class="tracking-card-header"><span class="tracking-asset-name" id="weiss-ov-3-sym">—</span><span class="tracking-symbol" id="weiss-ov-3-name">—</span></div><div class="tracking-price" id="price-weiss-ov-3">—</div><div class="tracking-change-wrap" id="change-weiss-ov-3">—</div><div class="tracking-rsi-wrap"><span class="tracking-label">RSI semanal:</span><span class="tracking-rsi" id="rsi-weiss-ov-3">—</span></div><div class="tracking-low52-wrap"><span class="tracking-label">Mín. 52 sem:</span><span class="tracking-low52" id="low52-weiss-ov-3">—</span></div><a id="weiss-ov-3-link" class="tracking-weiss-link" href="#" target="_blank" rel="noopener" style="display:none;">Análisis 12a</a><div class="tracking-status" id="status-weiss-ov-3">Sobrevendido</div></div>
+          <div class="tracking-card tracking-card-stock card-oversold" id="card-weiss-ov-4"><div class="tracking-card-header"><span class="tracking-asset-name" id="weiss-ov-4-sym">—</span><span class="tracking-symbol" id="weiss-ov-4-name">—</span></div><div class="tracking-price" id="price-weiss-ov-4">—</div><div class="tracking-change-wrap" id="change-weiss-ov-4">—</div><div class="tracking-rsi-wrap"><span class="tracking-label">RSI semanal:</span><span class="tracking-rsi" id="rsi-weiss-ov-4">—</span></div><div class="tracking-low52-wrap"><span class="tracking-label">Mín. 52 sem:</span><span class="tracking-low52" id="low52-weiss-ov-4">—</span></div><a id="weiss-ov-4-link" class="tracking-weiss-link" href="#" target="_blank" rel="noopener" style="display:none;">Análisis 12a</a><div class="tracking-status" id="status-weiss-ov-4">Sobrevendido</div></div>
+          <div class="tracking-card tracking-card-stock card-oversold" id="card-weiss-ov-5"><div class="tracking-card-header"><span class="tracking-asset-name" id="weiss-ov-5-sym">—</span><span class="tracking-symbol" id="weiss-ov-5-name">—</span></div><div class="tracking-price" id="price-weiss-ov-5">—</div><div class="tracking-change-wrap" id="change-weiss-ov-5">—</div><div class="tracking-rsi-wrap"><span class="tracking-label">RSI semanal:</span><span class="tracking-rsi" id="rsi-weiss-ov-5">—</span></div><div class="tracking-low52-wrap"><span class="tracking-label">Mín. 52 sem:</span><span class="tracking-low52" id="low52-weiss-ov-5">—</span></div><a id="weiss-ov-5-link" class="tracking-weiss-link" href="#" target="_blank" rel="noopener" style="display:none;">Análisis 12a</a><div class="tracking-status" id="status-weiss-ov-5">Sobrevendido</div></div>
         </div>
 
         <p class="tracking-footer">Crypto: Binance. Acciones: Yahoo (proxy en Netlify). Weiss en sobreventa: RSI semanal por Finnhub (/.netlify/functions/finnhub-indicator; requiere FINNHUB_API_KEY en Netlify). Opcional FINNHUB_API_KEY para cotizaciones. Actualización cada 30 s.</p>
@@ -390,6 +419,13 @@ layout: base.njk
   .tracking-change-wrap.change-down { color: #c0392b; }
   .tracking-rsi-wrap { margin-top: 0.5rem; display: flex; align-items: baseline; flex-wrap: wrap; }
   .tracking-low52-wrap { margin-top: 0.35rem; font-size: 0.9rem; }
+  .tracking-weiss-embed { margin-bottom: 1.5rem; }
+  .tracking-weiss-embed .tracking-label { display: block; margin-bottom: 0.5rem; }
+  .tracking-select { padding: 0.4rem 0.6rem; font-size: 1rem; min-width: 14rem; margin-bottom: 0.75rem; }
+  .tracking-weiss-iframe-wrap { width: 100%; max-width: 100%; height: 70vh; min-height: 400px; border: 1px solid var(--c-border, #ddd); border-radius: 8px; overflow: hidden; }
+  .tracking-weiss-iframe-wrap iframe { width: 100%; height: 100%; border: 0; display: block; }
+  .tracking-weiss-link { display: inline-block; margin-top: 0.5rem; font-size: 0.85rem; color: var(--c-link, #2563eb); }
+  .tracking-weiss-link:hover { text-decoration: underline; }
   .tracking-label { font-size: 0.9rem; color: var(--c-secondary, #666); margin-right: 0.5rem; }
   .tracking-rsi { font-weight: 700; font-size: 1.1rem; min-width: 2.5em; }
   .tracking-low52 { font-weight: 600; }
@@ -412,6 +448,7 @@ layout: base.njk
   const WEISS_SYMBOLS = ['JNJ', 'PG', 'KO', 'PEP', 'XOM', 'CVX', 'MCD', 'WMT', 'ABT', 'ABBV', 'O', 'PM', 'JPM', 'VZ', 'T', 'HD', 'IBM', 'MMM', 'SO', 'DUK'];
   const WEISS_NAMES = { JNJ: 'Johnson & Johnson', PG: 'Procter & Gamble', KO: 'Coca-Cola', PEP: 'PepsiCo', XOM: 'Exxon Mobil', CVX: 'Chevron', MCD: "McDonald's", WMT: 'Walmart', ABT: 'Abbott', ABBV: 'AbbVie', O: 'Realty Income', PM: 'Philip Morris', JPM: 'JPMorgan Chase', VZ: 'Verizon', T: 'AT&T', HD: 'Home Depot', IBM: 'IBM', MMM: '3M', SO: 'Southern Company', DUK: 'Duke Energy' };
   const RSI_OVERSOLD_MAX = 30;
+  const WEISS_ANALYSIS_BASE = 'https://geraldineweiss.onrender.com/?ticker=SYM&years=12&fundamental=on';
 
   function computeRSI(closes) {
     if (!closes || closes.length < RSI_PERIOD + 1) return null;
@@ -717,6 +754,7 @@ layout: base.njk
     var low52El = document.getElementById('low52-weiss-ov-' + n);
     var statusEl = document.getElementById('status-weiss-ov-' + n);
     var cardEl = document.getElementById('card-weiss-ov-' + n);
+    var linkEl = document.getElementById('weiss-ov-' + n + '-link');
     if (!data) {
       if (symEl) symEl.textContent = '—';
       if (nameEl) nameEl.textContent = '—';
@@ -724,6 +762,7 @@ layout: base.njk
       if (changeEl) { changeEl.textContent = '—'; changeEl.classList.remove('change-up', 'change-down'); }
       if (rsiEl) rsiEl.textContent = '—';
       if (low52El) low52El.textContent = '—';
+      if (linkEl) { linkEl.href = '#'; linkEl.style.display = 'none'; }
       if (statusEl) statusEl.textContent = '—';
       if (cardEl) cardEl.classList.remove('card-oversold');
       return;
@@ -745,6 +784,7 @@ layout: base.njk
     if (rsiEl) rsiEl.textContent = data.rsi != null ? data.rsi.toFixed(1) : '—';
     if (rsiEl) { rsiEl.classList.remove('rsi-overbought', 'rsi-oversold'); if (data.rsi != null) rsiEl.classList.add('rsi-oversold'); }
     if (low52El) low52El.textContent = data.low52 != null ? Number(data.low52).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) : '—';
+    if (linkEl) { linkEl.href = WEISS_ANALYSIS_BASE.replace('SYM', encodeURIComponent(data.sym)); linkEl.style.display = 'inline-block'; }
     if (statusEl) statusEl.textContent = data.rsi != null ? 'Sobrevendido' : '';
     if (cardEl) cardEl.classList.add('card-oversold');
   }
@@ -791,9 +831,35 @@ layout: base.njk
     loadWeissStocks();
   }
 
+  function initWeissEmbed() {
+    var selectEl = document.getElementById('weiss-ticker-select');
+    var iframeEl = document.getElementById('weiss-analysis-iframe');
+    if (selectEl && iframeEl) {
+      selectEl.addEventListener('change', function() {
+        var ticker = selectEl.value;
+        iframeEl.src = ticker ? WEISS_ANALYSIS_BASE.replace('SYM', encodeURIComponent(ticker)) : 'about:blank';
+      });
+    }
+    document.querySelectorAll('#tracking-weiss .tracking-card-stock').forEach(function(card) {
+      var sym = card.getAttribute('data-symbol');
+      if (!sym) return;
+      var wrap = document.createElement('div');
+      wrap.className = 'tracking-weiss-link-wrap';
+      var a = document.createElement('a');
+      a.href = WEISS_ANALYSIS_BASE.replace('SYM', encodeURIComponent(sym));
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.className = 'tracking-weiss-link';
+      a.textContent = 'Análisis 12a';
+      wrap.appendChild(a);
+      card.appendChild(wrap);
+    });
+  }
+
   function start() {
     loadAll();
     setInterval(loadAll, POLL_INTERVAL_MS);
+    initWeissEmbed();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
