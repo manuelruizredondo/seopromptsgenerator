@@ -375,16 +375,22 @@ layout: base.njk
 
   function computeRSI(closes) {
     if (!closes || closes.length < RSI_PERIOD + 1) return null;
-    const changes = [];
-    for (let i = 1; i < closes.length; i++) changes.push(closes[i] - closes[i - 1]);
-    let gains = 0, losses = 0;
-    for (let i = changes.length - RSI_PERIOD; i < changes.length; i++) {
-      if (changes[i] > 0) gains += changes[i]; else losses -= changes[i];
+    var changes = [];
+    for (var i = 1; i < closes.length; i++) changes.push(closes[i] - closes[i - 1]);
+    var avgGain = 0, avgLoss = 0;
+    for (var j = 0; j < RSI_PERIOD; j++) {
+      if (changes[j] > 0) avgGain += changes[j]; else avgLoss -= changes[j];
     }
-    const avgGain = gains / RSI_PERIOD;
-    const avgLoss = losses / RSI_PERIOD;
+    avgGain /= RSI_PERIOD;
+    avgLoss /= RSI_PERIOD;
+    for (var k = RSI_PERIOD; k < changes.length; k++) {
+      var g = changes[k] > 0 ? changes[k] : 0;
+      var l = changes[k] < 0 ? -changes[k] : 0;
+      avgGain = (avgGain * (RSI_PERIOD - 1) + g) / RSI_PERIOD;
+      avgLoss = (avgLoss * (RSI_PERIOD - 1) + l) / RSI_PERIOD;
+    }
     if (avgLoss === 0) return 100;
-    const rs = avgGain / avgLoss;
+    var rs = avgGain / avgLoss;
     return 100 - (100 / (1 + rs));
   }
 
