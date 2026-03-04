@@ -575,21 +575,9 @@ layout: base.njk
     return data;
   }
 
-  /** RSI semanal desde Finnhub (vía Netlify function). Devuelve número o null. */
+  /** RSI semanal desde Finnhub. Desactivado para no usar función Netlify; siempre devuelve null. */
   async function fetchFinnhubWeeklyRSI(symbol) {
-    var base = (typeof window !== 'undefined' && window.location && window.location.origin) ? window.location.origin : '';
-    var url = base + '/.netlify/functions/finnhub-indicator?symbol=' + encodeURIComponent(symbol) + '&resolution=W&indicator=RSI';
-    try {
-      var res = await fetch(url);
-      if (!res.ok) return null;
-      var data = await res.json();
-      var arr = data.rsi || data.RSI;
-      if (!Array.isArray(arr) || arr.length === 0) return null;
-      var last = arr[arr.length - 1];
-      return typeof last === 'number' && !Number.isNaN(last) ? last : null;
-    } catch (e) {
-      return null;
-    }
+    return null;
   }
 
   async function fetchYahooQuote(symbol) {
